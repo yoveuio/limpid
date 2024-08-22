@@ -1,0 +1,10 @@
+.idea
+.vscode
+
+## bazel
+bazel-basic
+bazel-bin
+bazel-out
+bazel-limpid
+bazel-testlogs
+MODULE.bazel.lock

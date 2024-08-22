@@ -1,0 +1,28 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
+load("@rules_spring//springboot:springboot.bzl", "springboot")
+
+package(default_visibility = ["//visibility:public"])
+
+dependencies = [
+    "@@maven//:com_google_guava_guava",
+    "@@maven//:org_springframework_boot_spring_boot",
+]
+
+java_library(
+    name = "lib",
+    srcs = glob(["**/*.java"]),
+    resources = ["//demo/java-tutorial/spring/src/main/resources"],
+    visibility = ["//:__subpackages__"],
+    # include the all resources
+    deps = dependencies,
+)
+
+springboot(
+    name = "ApplicationRunner",
+    # specify the main class
+    boot_app_class = "com.limpid.demo.spring.ApplicationRunner",
+    # https://github.com/salesforce/rules_spring/issues/177
+    boot_launcher_class = "org.springframework.boot.loader.launch.JarLauncher",
+    # refrence the library
+    java_library = ":lib",
+)
